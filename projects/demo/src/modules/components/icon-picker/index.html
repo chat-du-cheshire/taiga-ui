@@ -1,0 +1,153 @@
+<tui-doc-page
+    header="Icon picker"
+    package="EXPERIMENTAL"
+    type="components"
+>
+    <ng-template pageTab>
+        <p>
+            A panel for picking one entry out of grouped sets. It knows nothing about icons or emoji: an entry is a
+            <code>value</code>
+            with a
+            <code>name</code>
+            , and how it looks is decided by a template. Emoji work out of the box because the default template renders
+            <code>value</code>
+            as text.
+        </p>
+        <p>
+            The picker is presentational — put it inside
+            <code>tui-dropdown</code>
+            ,
+            <code>tui-sheet</code>
+            or a dialog yourself. The search field is projected, so you own its appearance, placeholder and debounce.
+        </p>
+
+        <tui-doc-example
+            id="base"
+            heading="Emoji in a dropdown"
+            [component]="1 | tuiComponent"
+            [content]="1 | tuiExample"
+        />
+
+        <tui-doc-example
+            id="custom"
+            heading="Custom template with Taiga icons"
+            [component]="2 | tuiComponent"
+            [content]="2 | tuiExample"
+        />
+    </ng-template>
+
+    <ng-template pageTab="API">
+        <table tuiDocAPI>
+            <tr
+                name="[groups]"
+                tuiDocAPIItem
+                type="readonly TuiIconPickerGroup&lt;T&gt;[]"
+            >
+                Groups of entries. Order is yours — the top row of tabs follows it, and each tab uses the group's
+                <code>icon</code>
+                . Clicking a tab scrolls to its group rather than filtering to it.
+            </tr>
+
+            <tr
+                name="[value]"
+                tuiDocAPIItem
+                type="string | null"
+            >
+                Currently picked entry, compared by
+                <code>value</code>
+                . Controlled: the picker highlights it but never stores it.
+            </tr>
+
+            <tr
+                name="[query]"
+                tuiDocAPIItem
+                type="string"
+            >
+                Search query. It comes from the field you project, the picker only filters by it.
+            </tr>
+
+            <tr
+                name="[filter]"
+                tuiDocAPIItem
+                type="TuiIconPickerFilter&lt;T&gt; | null"
+            >
+                Filters and orders groups in one pass. Defaults to a case-insensitive substring over
+                <code>name</code>
+                and
+                <code>tags</code>
+                . Pass
+                <code>null</code>
+                to disable filtering entirely — for server-side search, where groups already arrive filtered.
+            </tr>
+
+            <tr
+                name="[itemTemplate]"
+                tuiDocAPIItem
+                type="TemplateRef&lt;TuiContext&lt;T&gt;&gt; | null"
+            >
+                How to render an entry. Defaults to printing
+                <code>value</code>
+                as text.
+            </tr>
+
+            <tr
+                name="[emptyTemplate]"
+                tuiDocAPIItem
+                type="TemplateRef&lt;void&gt; | null"
+            >
+                Shown when nothing matches, and when
+                <code>groups</code>
+                is empty. Defaults to the localized
+                <code>nothingFoundMessage</code>
+                .
+            </tr>
+
+            <tr
+                name="(valueChange)"
+                tuiDocAPIItem
+                type="T"
+            >
+                Emits the whole entry, so your own fields survive the round trip. Picking a variant emits the variant.
+            </tr>
+        </table>
+
+        <h3>Variants</h3>
+        <p>
+            An entry may carry
+            <code>variants</code>
+            — skin tones for emoji, weights for an icon set. They are never listed inline: hold the entry with a
+            pointer, or press
+            <code>Alt + Enter</code>
+            on it, and they pop up. Entries that have them are marked with a corner dot.
+        </p>
+
+        <h3>Keyboard</h3>
+        <table tuiDocAPI>
+            <tr
+                name="↑ ↓ ← →"
+                tuiDocAPIItem
+                type=""
+            >
+                Move around the grid. From the projected search field,
+                <code>↓</code>
+                enters the grid.
+            </tr>
+
+            <tr
+                name="Home / End"
+                tuiDocAPIItem
+                type=""
+            >
+                First and last entry of the current group.
+            </tr>
+
+            <tr
+                name="Alt + Enter"
+                tuiDocAPIItem
+                type=""
+            >
+                Open variants of the focused entry.
+            </tr>
+        </table>
+    </ng-template>
+</tui-doc-page>

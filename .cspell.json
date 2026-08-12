@@ -54,7 +54,9 @@
         "Bellic",
         "haspopup",
         "multiselectable",
-        "longname"
+        "longname",
+        "CLDR",
+        "apos"
     ],
     "ignoreRegExpList": ["\\(https?://.*?\\)", "\\/{1}.+\\/{1}", "\\%2F.+", "\\%2C.+", "\\ɵ.+", "\\ыва.+"],
     "overrides": [

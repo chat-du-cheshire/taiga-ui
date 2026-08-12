@@ -118,6 +118,11 @@ export const ROUTES: Routes = [
         loadComponent: async () => import('../components/avatar'),
     }),
     route({
+        path: DemoRoute.IconPicker,
+        title: 'Icon picker',
+        loadComponent: async () => import('../components/icon-picker'),
+    }),
+    route({
         path: DemoRoute.Badge,
         loadComponent: async () => import('../components/badge'),
         title: 'Badge',

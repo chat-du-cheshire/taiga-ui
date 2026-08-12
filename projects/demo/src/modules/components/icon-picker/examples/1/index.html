@@ -1,0 +1,26 @@
+<button
+    type="button"
+    class="t-trigger"
+    [tuiDropdown]="picker"
+    [(tuiDropdownOpen)]="open"
+>
+    {{ value?.value || 'Pick an emoji' }}
+</button>
+
+<ng-template #picker>
+    <tui-icon-picker
+        class="t-picker"
+        [groups]="groups"
+        [query]="query"
+        [value]="value?.value ?? null"
+        (valueChange)="onPick($event)"
+    >
+        <tui-textfield iconStart="@tui.search">
+            <input
+                placeholder="Search"
+                tuiTextfield
+                [(ngModel)]="query"
+            />
+        </tui-textfield>
+    </tui-icon-picker>
+</ng-template>

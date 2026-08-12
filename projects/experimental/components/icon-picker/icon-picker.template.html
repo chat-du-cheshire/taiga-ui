@@ -1,0 +1,111 @@
+<div class="t-header">
+    <ng-content />
+
+    <nav
+        *ngIf="filtered.length > 1"
+        tuiTabs
+        class="t-tabs"
+        [activeItemIndex]="active"
+        (activeItemIndexChange)="onTab($event)"
+    >
+        <button
+            *ngFor="let group of filtered"
+            tuiTab
+            type="button"
+            class="t-tab"
+            [attr.aria-label]="group.label"
+        >
+            <tui-icon
+                *ngIf="group.icon"
+                [icon]="group.icon"
+            />
+        </button>
+    </nav>
+</div>
+
+<tui-scrollbar
+    class="t-scroll"
+    (scroll)="onScroll()"
+>
+    <section
+        *ngFor="let group of filtered"
+        #group
+        class="t-group"
+    >
+        <h3 class="t-label">{{ group.label }}</h3>
+
+        <div
+            role="listbox"
+            class="t-grid"
+            [attr.aria-label]="group.label"
+        >
+            <button
+                *ngFor="let item of group.items"
+                role="option"
+                type="button"
+                class="t-item"
+                [attr.aria-label]="item.name"
+                [attr.aria-selected]="item.value === value"
+                [attr.data-variants]="item.variants?.length ? '' : null"
+                [class.t-item_active]="item.value === value"
+                [tabIndex]="item.value === tabbable ? 0 : -1"
+                (click)="onPick(item)"
+                (focus)="onFocus(item)"
+                (pointercancel)="onHoldEnd()"
+                (pointerdown)="onHoldStart(item, $any($event.currentTarget))"
+                (pointerleave)="onHoldEnd()"
+                (pointerup)="onHoldEnd()"
+            >
+                <ng-container *ngTemplateOutlet="itemTemplate || defaultItem; context: {$implicit: item}" />
+            </button>
+        </div>
+    </section>
+
+    <div
+        *ngIf="!filtered.length"
+        class="t-empty"
+    >
+        <ng-container *ngTemplateOutlet="emptyTemplate || defaultEmpty" />
+    </div>
+</tui-scrollbar>
+
+<div
+    *ngIf="expanded"
+    class="t-anchor"
+    [style.height.px]="anchor.height"
+    [style.left.px]="anchor.left"
+    [style.top.px]="anchor.top"
+    [style.width.px]="anchor.width"
+    [tuiDropdown]="variants"
+    [tuiDropdownManual]="true"
+></div>
+
+<ng-template
+    #defaultItem
+    let-item
+>
+    {{ item.value }}
+</ng-template>
+
+<ng-template #defaultEmpty>
+    {{ nothingFound$ | async }}
+</ng-template>
+
+<ng-template #variants>
+    <div
+        role="listbox"
+        class="t-variants"
+    >
+        <button
+            *ngFor="let variant of expanded?.variants"
+            role="option"
+            type="button"
+            class="t-item"
+            [attr.aria-label]="variant.name"
+            [attr.aria-selected]="variant.value === value"
+            (click)="onPick(variant)"
+        >
+            <ng-container *ngTemplateOutlet="itemTemplate || defaultItem; context: {$implicit: variant}" />
+        </button>
+    </div>
+</ng-template>
