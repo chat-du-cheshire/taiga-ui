@@ -1,0 +1,19 @@
+tui-icon-group {
+    display: grid;
+    grid-template-columns: repeat(var(--t-columns, 8), 1fr);
+    /* Span every column of the parent list rather than sitting in one cell */
+    grid-column: 1 / -1;
+}
+
+.t-label {
+    position: sticky;
+    /* Rides along the top edge while the group is on screen, then leaves with it */
+    inset-block-start: 0;
+    grid-column: 1 / -1;
+    padding: 0.5rem 0;
+    margin: 0;
+    font: var(--tui-font-text-ui-m);
+    font-weight: bold;
+    color: var(--tui-text-primary);
+    background: var(--tui-background-base);
+}

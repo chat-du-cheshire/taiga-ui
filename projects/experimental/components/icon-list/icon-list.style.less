@@ -1,0 +1,25 @@
+tui-icon-list {
+    display: grid;
+    grid-template-columns: repeat(var(--t-columns, 8), 1fr);
+    inline-size: 100%;
+
+    [tuiIconOption] {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        aspect-ratio: 1;
+        border: none;
+        border-radius: var(--tui-radius-m);
+        background: transparent;
+        cursor: pointer;
+        font-size: 1.5rem;
+        line-height: 1;
+        /* An emoji is a grapheme cluster, never let it break apart */
+        white-space: nowrap;
+
+        &:hover,
+        &:focus-visible {
+            background: var(--tui-background-neutral-1);
+        }
+    }
+}

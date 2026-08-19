@@ -1,10 +1,23 @@
-import {type TuiIconPickerGroup} from '@taiga-ui/experimental';
-
 /**
- * A trimmed fixture, enough to demonstrate groups, search and variants.
- * The full pack generated from Unicode CLDR is a separate entry point.
+ * A trimmed fixture, enough to demonstrate grouping, search and tabs. The full
+ * pack generated from Unicode CLDR is a separate entry point.
+ *
+ * The shape is the demo's own: the list projects whatever you render, so it
+ * never sees this type.
  */
-export const EMOJI: readonly TuiIconPickerGroup[] = [
+export interface Emoji {
+    readonly value: string;
+    readonly name: string;
+    readonly tags?: readonly string[];
+}
+
+export interface EmojiGroup {
+    readonly label: string;
+    readonly icon: string;
+    readonly items: readonly Emoji[];
+}
+
+export const EMOJI: readonly EmojiGroup[] = [
     {
         label: 'Frequently used',
         icon: '@tui.clock',
@@ -15,13 +28,6 @@ export const EMOJI: readonly TuiIconPickerGroup[] = [
                 value: '💪',
                 name: 'flexed biceps',
                 tags: ['muscle', 'strong'],
-                variants: [
-                    {value: '💪🏻', name: 'flexed biceps: light skin tone'},
-                    {value: '💪🏼', name: 'flexed biceps: medium-light skin tone'},
-                    {value: '💪🏽', name: 'flexed biceps: medium skin tone'},
-                    {value: '💪🏾', name: 'flexed biceps: medium-dark skin tone'},
-                    {value: '💪🏿', name: 'flexed biceps: dark skin tone'},
-                ],
             },
             {value: '💥', name: 'collision', tags: ['boom', 'explode']},
         ],
@@ -50,25 +56,11 @@ export const EMOJI: readonly TuiIconPickerGroup[] = [
                 value: '👋',
                 name: 'waving hand',
                 tags: ['hand', 'hello', 'wave'],
-                variants: [
-                    {value: '👋🏻', name: 'waving hand: light skin tone'},
-                    {value: '👋🏼', name: 'waving hand: medium-light skin tone'},
-                    {value: '👋🏽', name: 'waving hand: medium skin tone'},
-                    {value: '👋🏾', name: 'waving hand: medium-dark skin tone'},
-                    {value: '👋🏿', name: 'waving hand: dark skin tone'},
-                ],
             },
             {
                 value: '👍',
                 name: 'thumbs up',
                 tags: ['+1', 'hand', 'like', 'yes'],
-                variants: [
-                    {value: '👍🏻', name: 'thumbs up: light skin tone'},
-                    {value: '👍🏼', name: 'thumbs up: medium-light skin tone'},
-                    {value: '👍🏽', name: 'thumbs up: medium skin tone'},
-                    {value: '👍🏾', name: 'thumbs up: medium-dark skin tone'},
-                    {value: '👍🏿', name: 'thumbs up: dark skin tone'},
-                ],
             },
         ],
     },

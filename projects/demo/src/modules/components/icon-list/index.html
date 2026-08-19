@@ -1,0 +1,122 @@
+<tui-doc-page
+    header="Icon list"
+    package="EXPERIMENTAL"
+    type="components"
+>
+    <ng-template pageTab>
+        <p>
+            A grid for icons, emoji or anything else you project into it — the same bargain as
+            <code>tui-data-list</code>
+            . It owns layout, keyboard navigation and sticky group headings, and nothing else: no data, no selection, no
+            search. You render the cells, so a click does whatever you bind to it.
+        </p>
+        <p>
+            The simplest case is one
+            <code>*ngFor</code>
+            of
+            <code>[tuiIconOption]</code>
+            buttons. Need sections? Wrap them in
+            <code>tui-icon-group</code>
+            . Need search? Filter your own array. Need tabs? Bring
+            <code>tuiTabs</code>
+            and point
+            <code>[tuiIconTabs]</code>
+            at the list.
+        </p>
+
+        <tui-doc-example
+            id="base"
+            heading="Flat list"
+            [component]="1 | tuiComponent"
+            [content]="1 | tuiExample"
+        />
+
+        <tui-doc-example
+            id="grouped"
+            heading="Groups, search and tabs"
+            [component]="2 | tuiComponent"
+            [content]="2 | tuiExample"
+        />
+    </ng-template>
+
+    <ng-template pageTab="API">
+        <h3>
+            <code>tui-icon-list</code>
+        </h3>
+        <p>
+            Lays projected options out in a grid of eight columns and drives roving-tabindex keyboard navigation over
+            them. Scrolling belongs to whatever wraps it — usually
+            <code>tui-scrollbar</code>
+            — which the list finds through
+            <code>TUI_SCROLL_REF</code>
+            . Column count comes from
+            <code>TUI_ICON_LIST_OPTIONS</code>
+            , since two-dimensional arrows need it in TypeScript and not only in CSS.
+        </p>
+        <p>
+            It is deliberately not virtualized. Windowing projected content would mean owning the data, which is exactly
+            what this component refuses to do — render fewer items yourself if a set gets too large.
+        </p>
+
+        <h3>
+            <code>tui-icon-group</code>
+        </h3>
+        <table tuiDocAPI>
+            <tr
+                name="[label]"
+                tuiDocAPIItem
+                type="string"
+            >
+                Heading text. It sticks to the top of the scroll area while the group is on screen and leaves with it.
+                Groups are optional — options can sit straight in the list.
+            </tr>
+        </table>
+
+        <h3>
+            <code>[tuiIconOption]</code>
+        </h3>
+        <p>
+            Marks an element as a cell:
+            <code>role="option"</code>
+            plus the grid styling and the tab stop. It carries no value and emits nothing.
+        </p>
+
+        <h3>
+            <code>[tuiIconTabs]</code>
+        </h3>
+        <p>
+            Goes on a
+            <code>tuiTabs</code>
+            nav and takes the list, e.g.
+            <code>[tuiIconTabs]="list"</code>
+            with
+            <code>#list="tuiIconList"</code>
+            . Tabs and groups are paired by index: clicking the nth tab scrolls to the nth group, and scrolling to the
+            nth group lights up the nth tab. It lives on the nav rather than on each tab because both usually come out
+            of an
+            <code>*ngFor</code>
+            , where a per-tab binding to a group instance would be evaluated before
+            <code>@ViewChildren</code>
+            resolve.
+        </p>
+
+        <h3>Keyboard</h3>
+        <table tuiDocAPI>
+            <tr
+                name="↑ ↓ ← →"
+                tuiDocAPIItem
+                type=""
+            >
+                Move around the grid. Arriving from outside — a search field, say — enters at the first option.
+            </tr>
+
+            <tr
+                name="Home / End"
+                tuiDocAPIItem
+                type=""
+            >
+                First and last option of the current group.
+            </tr>
+        </table>
+    </ng-template>
+</tui-doc-page>

@@ -19,7 +19,7 @@ export const DemoRoute = {
     Accordion: '/components/accordion',
     AccordionOld: '/components/accordion-deprecated',
     Avatar: '/components/avatar',
-    IconPicker: '/components/icon-picker',
+    IconList: '/components/icon-list',
     Badge: '/components/badge',
     BadgedContent: '/components/badged-content',
     Block: '/components/block',
