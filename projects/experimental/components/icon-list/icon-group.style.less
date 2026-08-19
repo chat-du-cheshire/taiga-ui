@@ -1,6 +1,6 @@
 tui-icon-group {
     display: grid;
-    grid-template-columns: repeat(var(--t-columns, 8), 1fr);
+    grid-template-columns: repeat(var(--t-columns, 8), minmax(var(--t-cell, 2.5rem), 1fr));
     /* Span every column of the parent list rather than sitting in one cell */
     grid-column: 1 / -1;
 }
