@@ -44,6 +44,13 @@
             [component]="3 | tuiComponent"
             [content]="3 | tuiExample"
         />
+
+        <tui-doc-example
+            id="twemoji"
+            heading="Twemoji instead of glyphs"
+            [component]="4 | tuiComponent"
+            [content]="4 | tuiExample"
+        />
     </ng-template>
 
     <ng-template pageTab="API">
@@ -86,6 +93,19 @@
             Marks an element as a cell:
             <code>role="option"</code>
             plus the grid styling and the tab stop. It carries no value and emits nothing.
+        </p>
+        <p>
+            The cell is a plain flex box, so its content is whatever you put there — a glyph, a
+            <code>tui-icon</code>
+            or an
+            <code>&lt;img&gt;</code>
+            . The last one is how a picker stops depending on the platform emoji font: the Twemoji example renders every
+            cell from
+            <code>@twemoji/api</code>
+            assets, and pairs them with
+            <code>[content]</code>
+            so the closed field shows the same image. An image has no font size to inherit, so give it a size of its
+            own.
         </p>
 
         <h3>Sizing</h3>

@@ -6,7 +6,7 @@ import {encapsulation} from '@demo/emulate/encapsulation';
 import {type TuiStringHandler} from '@taiga-ui/cdk';
 import {TuiDropdown, TuiIcon, TuiScrollbar, TuiTextfield} from '@taiga-ui/core';
 import {TuiIcons} from '@taiga-ui/experimental';
-import {TuiSelect, TuiTabs} from '@taiga-ui/kit';
+import {TuiChevron, TuiSelect, TuiTabs} from '@taiga-ui/kit';
 
 import {type Emoji, EMOJI, type EmojiGroup} from '../emoji';
 
@@ -15,6 +15,7 @@ import {type Emoji, EMOJI, type EmojiGroup} from '../emoji';
     imports: [
         FormsModule,
         NgForOf,
+        TuiChevron,
         TuiDropdown,
         TuiIcon,
         TuiIcons,
