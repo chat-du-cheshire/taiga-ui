@@ -506,6 +506,14 @@ export const pages: DocRoutePages = [
     },
     {
         section: 'Components',
+        title: 'Icon list',
+        keywords:
+            'icon, icons, иконки, иконка, emoji, эмодзи, смайлы, смайлики, picker, пикер, выбор иконки, palette, палитра, grid, сетка, set, набор, glyph, символы',
+        route: DemoRoute.IconList,
+        meta: {name: 'tui-icon-list'},
+    },
+    {
+        section: 'Components',
         title: 'Hint',
         subPages: [
             {

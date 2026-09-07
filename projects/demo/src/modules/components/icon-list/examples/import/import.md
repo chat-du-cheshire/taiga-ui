@@ -1,5 +1,5 @@
 ```ts
-import {TuiIconPickerComponent} from '@taiga-ui/experimental';
+import {TuiIcons} from '@taiga-ui/experimental';
 
 // ...
 
@@ -7,7 +7,7 @@ import {TuiIconPickerComponent} from '@taiga-ui/experimental';
   standalone: true,
   imports: [
     // ...
-    TuiIconPickerComponent,
+    TuiIcons,
   ],
   // ...
 })

@@ -1,0 +1,47 @@
+tui-icon-list {
+    /**
+     * Cells have an intrinsic size rather than a bare `1fr`, and the host has no
+     * `inline-size: 100%`. That is what lets a shrink-to-fit container — an
+     * `auto` dropdown or a `size="auto"` dialog — measure the grid instead of
+     * collapsing it: a percentage width inside an auto-width parent is circular.
+     * In a container with a width of its own the cells still stretch to fill it.
+     */
+    display: grid;
+    grid-template-columns: repeat(var(--t-columns, 8), minmax(var(--t-cell, 2.5rem), 1fr));
+}
+
+[tuiIconOption] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+    border: none;
+    border-radius: var(--tui-radius-m);
+    background: transparent;
+    cursor: pointer;
+    font-size: 1.5rem;
+    line-height: 1;
+    /* An emoji is a grapheme cluster, never let it break apart */
+    white-space: nowrap;
+
+    &:hover,
+    &:focus-visible {
+        background: var(--tui-background-neutral-1);
+    }
+}
+
+/**
+ * Shrink-to-fit containers measure the grid instead of squeezing it.
+ *
+ * `tui-dialog` sizes itself from `[data-size]`, so a plain rule is enough here;
+ * a dropdown pinned to a field width sets an inline `width` instead and has to
+ * be told through `[tuiDropdownLimitWidth]="'auto'"` rather than from CSS.
+ *
+ * `:has()` is unsupported below Safari 15.4, which is inside this project's
+ * browserslist range: there the dialog keeps its nominal size and the grid
+ * simply scrolls, which is a degradation and not a break.
+ */
+tui-dialog:has(tui-icon-list) {
+    inline-size: auto;
+    max-inline-size: 100%;
+}

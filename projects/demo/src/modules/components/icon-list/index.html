@@ -1,0 +1,193 @@
+<tui-doc-page
+    header="Icon list"
+    package="EXPERIMENTAL"
+    type="components"
+>
+    <ng-template pageTab>
+        <p>
+            A grid for icons, emoji or anything else you project into it — the same bargain as
+            <code>tui-data-list</code>
+            . It owns layout, keyboard navigation and sticky group headings, and nothing else: no data, no selection, no
+            search. You render the cells, so a click does whatever you bind to it.
+        </p>
+        <p>
+            The simplest case is one
+            <code>*ngFor</code>
+            of
+            <code>[tuiIconOption]</code>
+            buttons. Need sections? Wrap them in
+            <code>tui-icon-group</code>
+            . Need search? Filter your own array. Need tabs? Bring
+            <code>tuiTabs</code>
+            and point
+            <code>[tuiIconTabs]</code>
+            at the list.
+        </p>
+
+        <tui-doc-example
+            id="base"
+            heading="Flat list"
+            [component]="1 | tuiComponent"
+            [content]="1 | tuiExample"
+        />
+
+        <tui-doc-example
+            id="grouped"
+            heading="Groups, search and tabs"
+            [component]="2 | tuiComponent"
+            [content]="2 | tuiExample"
+        />
+
+        <tui-doc-example
+            id="select"
+            heading="Inside a select"
+            [component]="3 | tuiComponent"
+            [content]="3 | tuiExample"
+        />
+
+        <tui-doc-example
+            id="twemoji"
+            heading="Twemoji instead of glyphs"
+            [component]="4 | tuiComponent"
+            [content]="4 | tuiExample"
+        />
+    </ng-template>
+
+    <ng-template pageTab="API">
+        <h3>
+            <code>tui-icon-list</code>
+        </h3>
+        <p>
+            Lays projected options out in a grid of eight columns and drives roving-tabindex keyboard navigation over
+            them. Scrolling belongs to whatever wraps it — usually
+            <code>tui-scrollbar</code>
+            — which the list finds through
+            <code>TUI_SCROLL_REF</code>
+            . Column count comes from
+            <code>TUI_ICON_LIST_OPTIONS</code>
+            , since two-dimensional arrows need it in TypeScript and not only in CSS.
+        </p>
+        <p>
+            It is deliberately not virtualized. Windowing projected content would mean owning the data, which is exactly
+            what this component refuses to do — render fewer items yourself if a set gets too large.
+        </p>
+
+        <h3>
+            <code>tui-icon-group</code>
+        </h3>
+        <table tuiDocAPI>
+            <tr
+                name="[label]"
+                tuiDocAPIItem
+                type="string"
+            >
+                Heading text. It sticks to the top of the scroll area while the group is on screen and leaves with it.
+                Groups are optional — options can sit straight in the list.
+            </tr>
+        </table>
+
+        <h3>
+            <code>[tuiIconOption]</code>
+        </h3>
+        <p>
+            Marks an element as a cell:
+            <code>role="option"</code>
+            plus the grid styling and the tab stop. It carries no value and emits nothing.
+        </p>
+        <p>
+            The cell is a plain flex box, so its content is whatever you put there — a glyph, a
+            <code>tui-icon</code>
+            or an
+            <code>&lt;img&gt;</code>
+            . The last one is how a picker stops depending on the platform emoji font: the Twemoji example renders every
+            cell from
+            <code>@twemoji/api</code>
+            assets, and pairs them with
+            <code>[content]</code>
+            so the closed field shows the same image. An image has no font size to inherit, so give it a size of its
+            own.
+        </p>
+
+        <h3>Sizing</h3>
+        <p>
+            The grid has an intrinsic width — its cells are
+            <code>minmax(var(--t-cell), 1fr)</code>
+            and the host sets no width of its own. That is what lets a shrink-to-fit container measure it: a dropdown
+            with
+            <code>tuiDropdownLimitWidth="auto"</code>
+            , or a
+            <code>tui-dialog</code>
+            with
+            <code>size="auto"</code>
+            , wraps around the grid instead of collapsing it. Inside a container that has a width of its own the cells
+            stretch to fill it as before. Override
+            <code>--t-cell</code>
+            to change the minimum cell size.
+        </p>
+        <p>
+            Note that
+            <code>tui-textfield</code>
+            pins its dropdown to the field width by default, so a picker panel inside one needs
+            <code>tuiDropdownLimitWidth="auto"</code>
+            — otherwise eight columns get squeezed into the width of the input.
+        </p>
+
+        <h3>Using it as a data list</h3>
+        <p>
+            Stack
+            <code>tuiOption</code>
+            with a
+            <code>[value]</code>
+            onto the cells and the list starts reporting those values as its options, which is the whole contract
+            <code>tuiComboBox</code>
+            and friends need. Clicks then travel the normal route — the option tells
+            <code>TUI_DATA_LIST_HOST</code>
+            , the textfield writes the value and closes the dropdown — so no click handler of your own is involved.
+            Cells without a value cost nothing and simply do not appear among the options.
+        </p>
+        <p>
+            Both option directives are re-exported from
+            <code>TuiIcons</code>
+            , so a single import is enough. Without them in scope the directive silently never instantiates and the list
+            reports nothing.
+        </p>
+
+        <h3>
+            <code>[tuiIconTabs]</code>
+        </h3>
+        <p>
+            Goes on a
+            <code>tuiTabs</code>
+            nav and takes the list, e.g.
+            <code>[tuiIconTabs]="list"</code>
+            with
+            <code>#list="tuiIconList"</code>
+            . Tabs and groups are paired by index: clicking the nth tab scrolls to the nth group, and scrolling to the
+            nth group lights up the nth tab. It lives on the nav rather than on each tab because both usually come out
+            of an
+            <code>*ngFor</code>
+            , where a per-tab binding to a group instance would be evaluated before
+            <code>@ViewChildren</code>
+            resolve.
+        </p>
+
+        <h3>Keyboard</h3>
+        <table tuiDocAPI>
+            <tr
+                name="↑ ↓ ← →"
+                tuiDocAPIItem
+                type=""
+            >
+                Move around the grid. Arriving from outside — a search field, say — enters at the first option.
+            </tr>
+
+            <tr
+                name="Home / End"
+                tuiDocAPIItem
+                type=""
+            >
+                First and last option of the current group.
+            </tr>
+        </table>
+    </ng-template>
+</tui-doc-page>

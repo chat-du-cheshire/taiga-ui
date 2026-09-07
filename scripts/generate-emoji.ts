@@ -1,6 +1,9 @@
 /**
  * Regenerates the emoji pack shipped from `@taiga-ui/experimental/emoji`.
  *
+ * The pack is plain data with no dependency on any component: `tui-icon-list`
+ * projects whatever you render, so it never sees this shape.
+ *
  * Run manually after a Unicode release, commit the result:
  *   npx ts-node ./scripts/generate-emoji.ts
  *
@@ -162,9 +165,21 @@ ${items.map(printItem).join('\n')}
  *
  * Data derived from Unicode CLDR, distributed under the Unicode license.
  */
-import {type TuiIconPickerGroup} from '@taiga-ui/experimental/components/icon-picker';
+export interface TuiEmoji {
+    readonly value: string;
+    readonly name: string;
+    readonly tags?: readonly string[];
+    /** Skin tone variants of the same emoji, base first. */
+    readonly variants?: readonly TuiEmoji[];
+}
 
-export const TUI_EMOJI: readonly TuiIconPickerGroup[] = [
+export interface TuiEmojiGroup {
+    readonly label: string;
+    readonly icon: string;
+    readonly items: readonly TuiEmoji[];
+}
+
+export const TUI_EMOJI: readonly TuiEmojiGroup[] = [
 ${body}
 ];
 `;
